@@ -8,19 +8,19 @@
  */
 class MusicPlayer {
 public:
-  MusicPlayer(int pattern[], int patternSize, int pin = beep_pin): pattern(pattern), patternSize(patternSize), pin(pin) {
-    patternTotalTime = 0;
-    for (int i = 0; i < patternSize; ++i) {
-      patternTotalTime += pattern[i];
-    }
-  }
+  MusicPlayer(int pattern[], int patternSize, int pin = beep_pin): pattern(pattern), patternSize(patternSize), pin(pin) { }
 
   /**
    * Use in setup() to initialize the player
    */    
   void setup() {
     pinMode(pin, OUTPUT);
-    digitalWrite(pin, OFF);      
+    digitalWrite(pin, OFF);
+    
+    patternTotalTime = 0;
+    for (int i = 0; i < patternSize; ++i) {
+      patternTotalTime += pattern[i];
+    }
   }
 
   /**
@@ -53,7 +53,7 @@ public:
 private:
   int* pattern;
   int patternSize;
-  int patternTotalTime;
+  int patternTotalTime = 0;
   bool isPlaying = false;
   int pin;
 };
