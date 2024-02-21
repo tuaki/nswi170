@@ -2,7 +2,7 @@
 
 using namespace std;
 
-void print_stars(int amount) {
+void printStars(int amount) {
     for (int i = 0; i < amount; i++)
         cout << "*";
 }
@@ -10,7 +10,7 @@ void print_stars(int amount) {
 int main() {
     int stars = 5;
 
-    print_stars(stars);
+    printStars(stars);
     cout << endl;
 
     return 0;
