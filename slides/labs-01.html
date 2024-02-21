@@ -88,14 +88,14 @@
 	<li>Syntaxe je na první pohled podobná Pythonu, ale v mnoha detailech se liší</li>
 </ul></div></div>
 <div class="sl-block" data-block-type="code" style="width: 864px; height: 202px; left: 48px; top: 363px;" data-block-id="ef35df25882706ee320d1a053a4e0ffc" data-name="code-089923"><div class="sl-block-content notranslate" data-highlight-theme="monokai" data-code-frame="none" style="z-index: 14;"><pre style="font-size: 16px; line-height: 19px;" class="cpp"><code data-line-numbers="">if (someExpression)         // Parentheses, no colon
-    do_something();         // Mandatory semicolon
+    doSomething();          // Mandatory semicolon
 else {                      // Again, no colon
-    do_something_else();
-    do_more_else();         // Braces are used to create a block
-}                           // of code (instead of intendation)
+    doSomethingElse();
+    doMoreElse();           // Braces are used to create a block
+}                           // of code (instead of indentation)
 
 for (int i = 0; i &lt; 10; i++) {      // For-loop is entirely different
-    do_something();
+    doSomething();
 }</code></pre></div></div></section><section data-id="50004d75f11212a05885ac7e9efd6b52"><div class="sl-block" data-block-type="text" style="width: 384px; left: 48px; top: 52px; height: auto;" data-block-id="e07a13c9a259b34e9e489c08f842e390"><div class="sl-block-content" data-placeholder-tag="h2" data-placeholder-text="Title Text" style="text-align: left; z-index: 10;"><h2>Cvičení #1</h2></div></div>
 <div class="sl-block" data-block-type="text" style="width: 864px; left: 48px; top: 159px; height: auto;" data-block-id="f61efe814c90e00707881efc8931b090"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin urna odio, aliquam vulputate faucibus id, elementum lobortis felis. Mauris urna dolor, placerat ac sagittis quis." style="text-align: left; z-index: 11;"><ul>
 	<li>Vypište <code>Hello World!</code>
@@ -121,12 +121,12 @@ int main() {
 <div class="sl-block" data-block-type="text" style="width: 864px; left: 48px; top: 159px; height: auto;" data-block-id="3b7ac68fbc5c42846cedf4c9e1aa0f9e"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin urna odio, aliquam vulputate faucibus id, elementum lobortis felis. Mauris urna dolor, placerat ac sagittis quis." style="text-align: left; z-index: 11;"><ul>
 	<li>Vytvořte funkci, která dostane číslo a vypíše tolik <code>*</code> na jednom řádku</li>
 </ul></div></div>
-<div class="sl-block" data-block-type="code" data-name="code-0160d4" style="width: 864px; height: 298px; left: 48px; top: 257px;" data-block-id="b53b55e4c9a3d00308d12e340f122369"><div class="sl-block-content notranslate" data-highlight-theme="monokai" data-code-frame="none" style="z-index: 12;"><pre style="font-size: 16px; line-height: 19px;" class="cpp"><code data-line-numbers="">void print_stars(int amount) {
+<div class="sl-block" data-block-type="code" data-name="code-0160d4" style="width: 864px; height: 298px; left: 48px; top: 257px;" data-block-id="b53b55e4c9a3d00308d12e340f122369"><div class="sl-block-content notranslate" data-highlight-theme="monokai" data-code-frame="none" style="z-index: 12;"><pre style="font-size: 16px; line-height: 19px;" class="cpp"><code data-line-numbers="">void printStars(int amount) {
     ...
 }
 
 int main() {
-    print_stars(5);
+    printStars(5);
     
     return 0;
 }
@@ -140,9 +140,9 @@ int main() {
 	<li>Vytvořte funkci, která dostane číslo a vypíše tak dlouhý <em>trojúhelník</em> z <code>*</code>
 </li>
 </ul></div></div>
-<div class="sl-block" data-block-type="code" data-name="code-0160d4" style="width: 864px; height: 239px; left: 48px; top: 249px;" data-block-id="4ff299fa0b9ee2481b243a59b60a81d5"><div class="sl-block-content notranslate" data-highlight-theme="monokai" data-code-frame="none" style="z-index: 12;"><pre style="font-size: 16px; line-height: 19px;" class="cpp"><code data-line-numbers="">void print_triangle(int levels) { ... }
+<div class="sl-block" data-block-type="code" data-name="code-0160d4" style="width: 864px; height: 239px; left: 48px; top: 249px;" data-block-id="4ff299fa0b9ee2481b243a59b60a81d5"><div class="sl-block-content notranslate" data-highlight-theme="monokai" data-code-frame="none" style="z-index: 12;"><pre style="font-size: 16px; line-height: 19px;" class="cpp"><code data-line-numbers="">void printTriangle(int levels) { ... }
 
-print_triangle(4);
+printTriangle(4);
 
 /*
 
@@ -160,9 +160,9 @@ print_triangle(4);
 	</ul>
 	</li>
 </ul></div></div>
-<div class="sl-block" data-block-type="code" data-name="code-0160d4" style="width: 864px; height: 401px; left: 48px; top: 299px;" data-block-id="701960b2a6ba0e9c8ffdc74059568c6e"><div class="sl-block-content notranslate" data-highlight-theme="monokai" data-code-frame="none" style="z-index: 12;"><pre style="font-size: 16px; line-height: 19px;" class="cpp"><code data-line-numbers="">void print_tree(int levels, int skipped = 0) { ... }
+<div class="sl-block" data-block-type="code" data-name="code-0160d4" style="width: 864px; height: 401px; left: 48px; top: 299px;" data-block-id="701960b2a6ba0e9c8ffdc74059568c6e"><div class="sl-block-content notranslate" data-highlight-theme="monokai" data-code-frame="none" style="z-index: 12;"><pre style="font-size: 16px; line-height: 19px;" class="cpp"><code data-line-numbers="">void printTree(int levels, int skipped = 0) { ... }
 
-print_tree(3);
+printTree(3);
 
 /*
 
@@ -172,7 +172,7 @@ print_tree(3);
 
 */
 
-print_tree(3, 1);
+printTree(3, 1);
 
 /*
 
@@ -196,9 +196,9 @@ print_tree(3, 1);
 </ul></div></div>
 </section><section data-id="1b46e53c0e5c13b64a95ba0aac87d7b7">
 
-<div class="sl-block" data-block-type="code" data-name="code-0160d4" style="width: 864px; height: 447px; left: 48px; top: 164.5px;" data-block-id="6c453cdbb3b943e2d935bde068aa4d5c"><div class="sl-block-content notranslate" data-highlight-theme="monokai" data-code-frame="none" style="z-index: 12;"><pre style="font-size: 16px; line-height: 19px;" class="cpp"><code data-line-numbers="">void print_christmas_tree(int segments, int segmentHeight, int ornaments) { ... }
+<div class="sl-block" data-block-type="code" data-name="code-0160d4" style="width: 864px; height: 447px; left: 48px; top: 164.5px;" data-block-id="6c453cdbb3b943e2d935bde068aa4d5c"><div class="sl-block-content notranslate" data-highlight-theme="monokai" data-code-frame="none" style="z-index: 12;"><pre style="font-size: 16px; line-height: 19px;" class="cpp"><code data-line-numbers="">void printChristmas_tree(int segments, int segmentHeight, int ornaments) { ... }
 
-print_christmas_tree(5, 3, 4);
+printChristmasTree(5, 3, 4);
 
 /*
 
@@ -254,10 +254,10 @@ void foo(int array[], int size) {
 	</ul>
 	</li>
 </ul></div></div>
-<div class="sl-block" data-block-type="code" data-name="code-0160d4" style="width: 864px; height: 353px; left: 48px; top: 330px;" data-block-id="80f0eb80351d6e72d2efa9b72158bdcb"><div class="sl-block-content notranslate" data-highlight-theme="monokai" data-code-frame="none" style="z-index: 12;"><pre style="font-size: 16px; line-height: 19px;" class="cpp"><code data-line-numbers="">void print_chart(int values[], int count) { ... }
+<div class="sl-block" data-block-type="code" data-name="code-0160d4" style="width: 864px; height: 353px; left: 48px; top: 330px;" data-block-id="80f0eb80351d6e72d2efa9b72158bdcb"><div class="sl-block-content notranslate" data-highlight-theme="monokai" data-code-frame="none" style="z-index: 12;"><pre style="font-size: 16px; line-height: 19px;" class="cpp"><code data-line-numbers="">void printChart(int values[], int count) { ... }
 
 int values[] = { 3, 4, 4, 5, 6, 8, 11, 10, 5, 2, 0 };
-print_chart(values, count);
+printChart(values, count);
 
 /*
 | ***
@@ -304,10 +304,10 @@ delete [] array;            // Deallocation</code></pre></div></div></section><s
 	</ul>
 	</li>
 </ul></div></div>
-<div class="sl-block" data-block-type="code" data-name="code-0160d4" style="width: 864px; height: 219px; left: 48px; top: 462px;" data-block-id="c71553a683daed091302c0ac93c180f3"><div class="sl-block-content notranslate" data-highlight-theme="monokai" data-code-frame="none" style="z-index: 12;"><pre style="font-size: 16px; line-height: 19px;" class="cpp"><code data-line-numbers="">int* compute_moving_average(int values[], int count, int windowSize) { ... }
+<div class="sl-block" data-block-type="code" data-name="code-0160d4" style="width: 864px; height: 219px; left: 48px; top: 462px;" data-block-id="c71553a683daed091302c0ac93c180f3"><div class="sl-block-content notranslate" data-highlight-theme="monokai" data-code-frame="none" style="z-index: 12;"><pre style="font-size: 16px; line-height: 19px;" class="cpp"><code data-line-numbers="">int* computeMovingAverage(int values[], int count, int windowSize) { ... }
 
 int values[] = { 3, 4, 4, 5, 6, 8, 11, 11, 10, 5, 2, 0 };
-compute_moving_average(values, 12, 3);
+computeMovingAverage(values, 12, 3);
 
 /*
 
