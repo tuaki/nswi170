@@ -1,5 +1,4 @@
 #include <funshield.h>
-#include "library.h"
 
 void setup() {
     pinMode(led1_pin, OUTPUT); // Declare given pin as output
@@ -8,5 +7,5 @@ void setup() {
 }
 
 void loop() {
-    
+
 }

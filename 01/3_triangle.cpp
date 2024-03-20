@@ -5,13 +5,12 @@ using namespace std;
 void printStars(int amount) {
     for (int i = 0; i < amount; i++)
         cout << "*";
-
-    cout << endl;
 }
 
 void printTriangle(int levels) {
     for (int i = 0; i < levels; i++) {
         printStars(i + 1);
+        cout << endl;
     }
 }
 
