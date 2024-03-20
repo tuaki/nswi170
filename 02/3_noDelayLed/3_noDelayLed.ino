@@ -22,6 +22,7 @@ void loop() {
         return;
 
     timer -= PERIOD;
+    
     currentState = currentState == ON ? OFF : ON;
     digitalWrite(led1_pin, currentState);
 }
