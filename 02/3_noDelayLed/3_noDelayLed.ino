@@ -5,7 +5,7 @@ constexpr int PERIOD = 100; // In milliseconds
 unsigned long lastTime;
 
 void setup() {
-    pinMode(led1_pin, OUTPUT);
+    pinMode(LED1_PIN, OUTPUT);
     lastTime = millis();
 }
 
@@ -24,5 +24,5 @@ void loop() {
     timer -= PERIOD;
     
     currentState = currentState == ON ? OFF : ON;
-    digitalWrite(led1_pin, currentState);
+    digitalWrite(LED1_PIN, currentState);
 }

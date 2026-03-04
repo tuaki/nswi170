@@ -2,17 +2,17 @@
 
 constexpr int PERIOD = 800; // In milliseconds
 
-constexpr int leds[] = { led1_pin, led2_pin, led3_pin, led4_pin };
-constexpr int ledsSize = sizeof(leds) / sizeof(leds[0]);
+constexpr int LEDS[] = { LED1_PIN, LED2_PIN, LED3_PIN, LED4_PIN };
+constexpr int LEDS_SIZE = sizeof(LEDS) / sizeof(LEDS[0]);
 
 void setConfiguration(const int* values) {
-    for (int i = 0; i < ledsSize; i++)
-        digitalWrite(leds[i], values[i] ? ON : OFF);
+    for (int i = 0; i < LEDS_SIZE; i++)
+        digitalWrite(LEDS[i], values[i] ? ON : OFF);
 }
 
 const int* toBinary(int number) {
-    static int output[ledsSize];
-    for (int i = 0; i < ledsSize; i++) {
+    static int output[LEDS_SIZE];
+    for (int i = 0; i < LEDS_SIZE; i++) {
         output[i] = number & 1;
         number = number >> 1;
     }
@@ -28,7 +28,7 @@ unsigned long lastTime;
 int counter = 1;
 
 void setup() {
-    for (int led : leds)
+    for (int led : LEDS)
         pinMode(led, OUTPUT);
 
     lastTime = millis();

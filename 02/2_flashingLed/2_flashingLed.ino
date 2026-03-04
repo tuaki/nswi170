@@ -3,12 +3,12 @@
 constexpr int PERIOD = 100; // In milliseconds
 
 void setup() {
-    pinMode(led1_pin, OUTPUT);
+    pinMode(LED1_PIN, OUTPUT);
 }
 
 void loop() {
-    digitalWrite(led1_pin, ON);
+    digitalWrite(LED1_PIN, ON);
     delay(PERIOD);
-    digitalWrite(led1_pin, OFF);
+    digitalWrite(LED1_PIN, OFF);
     delay(PERIOD);
 }

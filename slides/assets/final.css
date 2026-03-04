@@ -1,0 +1,949 @@
+/*! normalize.css v2.1.0 | MIT License | git.io/normalize */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,600;0,700;1,600;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+/* TODO Also use some public api for these fonts. */
+@import url("https://static.slid.es/fonts/v3/lato/lato.css");
+@import url("https://static.slid.es/fonts/v3/oxygen/oxygen.css");
+
+/* TODO the default theme is not used ... unify it with this file, or write some custom.css file for differences. */
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+nav,
+section,
+summary {
+    display: block;
+}
+
+audio,
+canvas,
+video {
+    display: inline-block;
+}
+
+audio:not([controls]) {
+    display: none;
+    height: 0;
+}
+
+[hidden] {
+    display: none;
+}
+
+html {
+    font-family: sans-serif;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
+
+body {
+    margin: 0;
+}
+
+a:focus {
+    outline: thin dotted;
+}
+
+a:active,
+a:hover {
+    outline: 0;
+}
+
+abbr[title] {
+    border-bottom: 1px dotted;
+}
+
+b,
+strong {
+    font-weight: bold;
+}
+
+dfn {
+    font-style: italic;
+}
+
+hr {
+    box-sizing: content-box;
+    height: 0;
+}
+
+mark {
+    background: #ff0;
+    color: #000;
+}
+
+code,
+kbd,
+pre,
+samp {
+    font-family: monospace, serif;
+    font-size: 1em;
+}
+
+pre {
+    white-space: pre-wrap;
+}
+
+q {
+    quotes: "\201C" "\201D" "\2018" "\2019";
+}
+
+small {
+    font-size: 80%;
+}
+
+sub,
+sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+}
+
+sup {
+    top: -0.5em;
+}
+
+sub {
+    bottom: -0.25em;
+}
+
+svg:not(:root) {
+    overflow: hidden;
+}
+
+button {
+    font-family: inherit;
+    font-size: 100%;
+    margin: 0;
+}
+
+button {
+    line-height: normal;
+}
+
+button {
+    text-transform: none;
+}
+
+button {
+    cursor: pointer;
+}
+
+button[disabled] {
+    cursor: default;
+}
+
+button::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+textarea {
+    overflow: auto;
+    vertical-align: top;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.theme-font-montserrat .themed,
+.theme-font-montserrat .reveal {
+    font-family: "Open Sans", sans-serif;
+    font-size: 30px;
+}
+
+.theme-font-montserrat .themed section,
+.theme-font-montserrat .reveal section {
+    line-height: 1.3;
+}
+
+.theme-font-montserrat .themed h1,
+.theme-font-montserrat .themed h2,
+.theme-font-montserrat .themed h3,
+.theme-font-montserrat .themed h4,
+.theme-font-montserrat .themed h5,
+.theme-font-montserrat .themed h6,
+.theme-font-montserrat .reveal h1,
+.theme-font-montserrat .reveal h2,
+.theme-font-montserrat .reveal h3,
+.theme-font-montserrat .reveal h4,
+.theme-font-montserrat .reveal h5,
+.theme-font-montserrat .reveal h6 {
+    font-family: "Montserrat", Helvetica, sans-serif;
+    text-transform: none;
+    line-height: 1.3;
+    font-weight: 600;
+}
+
+.theme-font-opensans .themed,
+.theme-font-opensans .reveal {
+    font-family: "Open Sans", Helvetica, sans-serif;
+    font-size: 30px;
+}
+
+.theme-font-opensans .themed section,
+.theme-font-opensans .reveal section {
+    line-height: 1.3;
+}
+
+.theme-font-opensans .themed h1,
+.theme-font-opensans .themed h2,
+.theme-font-opensans .themed h3,
+.theme-font-opensans .themed h4,
+.theme-font-opensans .themed h5,
+.theme-font-opensans .themed h6,
+.theme-font-opensans .reveal h1,
+.theme-font-opensans .reveal h2,
+.theme-font-opensans .reveal h3,
+.theme-font-opensans .reveal h4,
+.theme-font-opensans .reveal h5,
+.theme-font-opensans .reveal h6 {
+    font-family: "Open Sans", Helvetica, sans-serif;
+    text-transform: none;
+    line-height: 1.3;
+    font-weight: bold;
+}
+
+/*!
+ * Main styles for Slides
+ *
+ * @author Hakim El Hattab
+ */
+:root {
+    --active-color: #1baee1;
+    --font-size-edit-ui: 12px;
+    --radius-1: 2px;
+    --radius-2: 4px;
+    --radius-3: 6px;
+    --radius-4: 8px;
+    --radius-5: 12px;
+    --radius-6: 16px;
+    --radius-full: 9999px;
+    --space-1: 2px;
+    --space-2: 4px;
+    --space-3: 6px;
+    --space-4: 8px;
+    --space-5: 12px;
+    --space-6: 16px;
+    --space-7: 24px;
+    --space-8: 32px;
+}
+
+:root,
+.dark-theme {
+    --fg-1: #fff;
+    --fg-2: #e6e6e6;
+    --fg-3: #cccccc;
+    --fg-4: #b3b3b3;
+    --fg-5: #999999;
+    --fg-6: gray;
+    --bg-1: #111;
+    --bg-2: #1a1a1c;
+    --bg-3: #252527;
+    --bg-3-rgb: 37, 37, 39;
+    --bg-4: #3a3a3d;
+    --bg-5: #49494c;
+    --bg-6: #58585b;
+    --bg-1-divider: #313131;
+    --bg-2-divider: #404040;
+    --bg-3-divider: #404040;
+    --bg-4-divider: #4f4f4f;
+    --bg-5-divider: #5e5e5e;
+    --bg-surface-0: rgba(235, 235, 250, 0.05);
+    --bg-surface-1: rgba(235, 235, 250, 0.1);
+    --bg-surface-2: rgba(235, 235, 250, 0.2);
+    --bg-surface-3: rgba(235, 235, 250, 0.3);
+    --bg-surface-4: rgba(235, 235, 250, 0.4);
+    --bg-surface-5: rgba(235, 235, 250, 0.5);
+    --bg-indent-1: rgba(0, 0, 0, 0.1);
+    --bg-indent-2: rgba(0, 0, 0, 0.2);
+    --bg-indent-3: rgba(0, 0, 0, 0.3);
+    --bg-glass-color: rgba(13, 13, 15, 0.9);
+    --bg-glass-filter: blur(8px);
+    --bg-contrast-1: #fff;
+    --fg-contrast-1: #1c1c1f;
+    --selected-item-bg: rgb(211 211 247 / 20%);
+    --selected-item-fg: var(--fg-1);
+}
+
+.light-theme {
+    --fg-1: #252525;
+    --fg-2: #323232;
+    --fg-3: #3f3f3f;
+    --fg-4: #4b4b4b;
+    --fg-5: #585858;
+    --fg-6: #656565;
+    --bg-1: #fff;
+    --bg-2: #f2f3f5;
+    --bg-3: #e3e4e6;
+    --bg-3-rgb: 227, 228, 230;
+    --bg-4: #d8d9de;
+    --bg-5: #c4c5c9;
+    --bg-6: #b0b1b5;
+    --bg-1-divider: #a4a4a4;
+    --bg-2-divider: #acacac;
+    --bg-3-divider: #b6b6b6;
+    --bg-4-divider: #b6b6b6;
+    --bg-5-divider: #cacaca;
+    --bg-surface-0: rgba(105, 105, 105, 0.05);
+    --bg-surface-1: rgba(105, 105, 105, 0.1);
+    --bg-surface-2: rgba(105, 105, 105, 0.2);
+    --bg-surface-3: rgba(105, 105, 105, 0.3);
+    --bg-surface-4: rgba(105, 105, 105, 0.4);
+    --bg-surface-5: rgba(105, 105, 105, 0.5);
+    --bg-indent-1: rgba(0, 0, 0, 0.1);
+    --bg-indent-2: rgba(0, 0, 0, 0.2);
+    --bg-indent-3: rgba(0, 0, 0, 0.3);
+    --bg-glass-color: rgba(255, 255, 255, 0.9);
+    --bg-glass-filter: blur(8px);
+    --bg-contrast-1: #1c1c1f;
+    --fg-contrast-1: #fff;
+    --selected-item-bg: rgba(105, 105, 120, 0.2);
+    --selected-item-fg: var(--fg-1);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+:-webkit-full-screen {
+    width: 100%;
+    height: 100%;
+}
+
+:-ms-fullscreen {
+    width: 100%;
+    height: 100%;
+}
+
+:fullscreen {
+    width: 100%;
+    height: 100%;
+}
+
+html,
+body {
+    padding: 0;
+    margin: 0;
+    font-size: 16px;
+}
+
+html:before,
+body:before {
+    content: '' !important;
+}
+
+html {
+    -webkit-font-smoothing: subpixel-antialiased !important;
+}
+
+html.sl-root:not(.loaded) * {
+    transition: none !important;
+}
+
+body {
+    overflow-y: scroll;
+}
+
+html,
+#container {
+    background-color: #f0f1f2;
+}
+
+html.spa,
+html.deck-dashboard {
+    height: 100vh;
+    height: var(--viewport-height, 100vh);
+}
+
+html.spa body,
+html.spa #container,
+html.deck-dashboard body,
+html.deck-dashboard #container {
+    height: 100%;
+    overflow: hidden;
+}
+
+#container {
+    position: relative;
+    z-index: 1;
+}
+
+.icon {
+    display: inline-block;
+    line-height: 1;
+}
+
+.clear {
+    clear: both;
+}
+
+.no-transition,
+.no-transition * {
+    transition: none !important;
+    animation-duration: 0s !important;
+}
+
+a {
+    color: #255c7c;
+    text-decoration: none;
+    outline: 0;
+}
+
+a:hover {
+    color: #4195c6;
+}
+
+a:focus {
+    outline: 1px solid #1baee1;
+}
+
+p a,
+table a {
+    border-bottom: 1px solid #8fc1de;
+}
+
+b {
+    font-weight: 600;
+}
+
+small {
+    font-size: 0.8em;
+}
+
+button {
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+}
+
+.text-semi-bold {
+    font-weight: 500;
+}
+
+.main {
+    line-height: 1.5;
+}
+
+.reveal-viewport {
+    width: 100%;
+    height: 100%;
+}
+
+.reveal .sl-block {
+    display: block;
+    position: absolute;
+    z-index: auto;
+    min-width: 1px;
+    min-height: 1px;
+    pointer-events: none;
+}
+
+.reveal .sl-block .sl-block-content {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    outline: 0;
+    word-wrap: break-word;
+}
+
+/* TODO Not used but it would be nice */
+
+.reveal .sl-block[data-block-type="code"] .copy-code-to-clipboard {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #fff;
+    background: #1baee1;
+    border-radius: 2px;
+    padding: 4px 8px;
+    display: none;
+}
+
+.reveal .sl-block[data-block-type="code"] .copy-code-to-clipboard:hover {
+    background: #46bfe9;
+}
+
+.reveal .sl-block[data-block-type="code"] .copy-code-to-clipboard:active {
+    background: #189cca;
+}
+
+.reveal .sl-block[data-block-type="code"] .copy-code-to-clipboard.bounce {
+    animation: small-bounce 0.4s ease;
+}
+
+.reveal .sl-block[data-block-type="code"] .sl-block-content:hover .copy-code-to-clipboard {
+    display: block;
+}
+
+/* TODO end of not used */
+
+.reveal .katex {
+    font-family: KaTeX_Main, Times New Roman, serif;
+    /* Custom css */
+    /* Similar to `code` below - we want to maintain consistent line height. */
+    line-height: 1;
+}
+
+.reveal div,
+.reveal span,
+.reveal applet,
+.reveal object,
+.reveal iframe,
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6,
+.reveal p,
+.reveal blockquote,
+.reveal pre,
+.reveal a,
+.reveal abbr,
+.reveal acronym,
+.reveal address,
+.reveal big,
+.reveal cite,
+.reveal code,
+.reveal del,
+.reveal dfn,
+.reveal em,
+.reveal img,
+.reveal ins,
+.reveal kbd,
+.reveal q,
+.reveal s,
+.reveal samp,
+.reveal small,
+.reveal strike,
+.reveal strong,
+.reveal sub,
+.reveal sup,
+.reveal tt,
+.reveal var,
+.reveal b,
+.reveal u,
+.reveal center,
+.reveal dl,
+.reveal dt,
+.reveal dd,
+.reveal ol,
+.reveal ul,
+.reveal li,
+.reveal fieldset,
+.reveal form,
+.reveal label,
+.reveal legend,
+.reveal table,
+.reveal caption,
+.reveal tbody,
+.reveal tfoot,
+.reveal thead,
+.reveal tr,
+.reveal th,
+.reveal td,
+.reveal article,
+.reveal aside,
+.reveal canvas,
+.reveal details,
+.reveal embed,
+.reveal figure,
+.reveal figcaption,
+.reveal footer,
+.reveal header,
+.reveal hgroup,
+.reveal menu,
+.reveal nav,
+.reveal output,
+.reveal ruby,
+.reveal section,
+.reveal summary,
+.reveal time,
+.reveal mark,
+.reveal audio,
+.reveal video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+.reveal .slides > section,
+.reveal .slides > section > section {
+    height: 100%;
+    font-weight: inherit;
+    padding: 0;
+}
+
+.reveal h1 {
+    font-size: 2.50em;
+    margin-bottom: 0.75rem;
+}
+
+.reveal h2 {
+    font-size: 1.90em;
+    margin-bottom: 0.75rem;
+}
+
+.reveal h3 {
+    font-size: 1.30em;
+    margin-bottom: 0.75rem;
+}
+
+.reveal h4 {
+    font-size: 1.00em;
+    margin-bottom: 0.5rem;
+}
+
+.reveal h5 {
+    font-size: 1.00em;
+    margin-bottom: 0.5rem;
+}
+
+.reveal h6 {
+    font-size: 1.00em;
+    margin-bottom: 0.5rem;
+}
+
+.reveal p {
+    margin-bottom: 0.5rem;
+}
+
+.reveal a {
+    text-decoration: none;
+}
+
+.reveal b,
+.reveal strong {
+    font-weight: bold;
+}
+
+.reveal em {
+    font-style: italic;
+}
+
+.reveal sup {
+    vertical-align: super;
+    font-size: smaller;
+}
+
+.reveal sub {
+    vertical-align: sub;
+    font-size: smaller;
+}
+
+.reveal small {
+    font-size: 0.6em;
+}
+
+.reveal ol,
+.reveal dl,
+.reveal ul {
+    /* Custom css */
+    /*
+    display: inline-block;
+    */
+    margin: 0 0 0.5rem 3rem;
+    text-align: left;
+    max-width: 100%;
+}
+
+.reveal ol:not([type]) {
+    list-style-type: decimal;
+}
+
+.reveal ul {
+    list-style-type: disc;
+}
+
+.reveal ul ul {
+    list-style-type: square;
+}
+
+.reveal ul ul ul {
+    list-style-type: circle;
+}
+
+
+.reveal ul ul,
+.reveal ul ol,
+.reveal ol ol,
+.reveal ol ul {
+    /* Custom css */
+    /*
+    display: block;
+    margin-left: 1.5em;
+    */
+    margin-bottom: 0;
+    /* There is an option to don't use this statement in order to have nested items appear closer to their parents (with respect to their parents' siblings). However, that looks weird. */
+}
+
+
+.reveal dt {
+    font-weight: bold;
+}
+
+.reveal dd {
+    margin-left: 3rem;
+}
+
+.reveal q {
+    quotes: none;
+    font-style: italic;
+}
+
+.reveal blockquote {
+    display: block;
+    margin: 0.5rem 0;
+    font-style: italic;
+}
+
+.reveal blockquote:before {
+    content: "\201C";
+    display: inline-block;
+    padding: 0 0.4rem;
+    font-size: 2em;
+    line-height: 1em;
+    height: 1px;
+    vertical-align: top;
+}
+
+.reveal blockquote>:first-child {
+    margin-top: 0;
+    display: inline;
+}
+
+.reveal blockquote>:last-child {
+    margin-bottom: 0;
+}
+
+.reveal pre {
+    display: block;
+    position: relative;
+
+    /* Custom css */
+    /* margin: 0.25em auto; */
+    font-size: 0.6em;
+    margin: 0.5rem 0;
+
+    text-align: left;
+    font-family: Courier, monospace;
+    line-height: 1.2;
+    word-wrap: break-word;
+}
+
+.reveal code {
+    font-family: Courier, monospace;
+    /* Custom css */
+    /* This is needed to make lines with code blocks the same height as without them. For some reason, `strong` and `em` tags don't have this problem.  */
+    line-height: 1;
+}
+
+.reveal pre code {
+    display: block;
+    padding: 5px;
+    overflow: auto;
+    word-wrap: normal;
+    /* Custom css */
+    /* This fixes back the line height override from the previous rule. We want it to apply only to `code` in normal text, not to `code` in `pre` blocks. */
+    line-height: inherit;
+}
+
+.reveal table {
+    /* Custom css */
+    /* margin: auto; */
+    margin: 0.5rem 0;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.reveal table th {
+    font-weight: bold;
+}
+
+.reveal table th,
+.reveal table td {
+    /* Custom css */
+    /* padding: 0.2em 0.5em 0.2em 0.5em; */
+    padding: 5px;
+    /* border-bottom: 1px solid; */
+    border: 1px solid currentColor;
+}
+
+.reveal table.padding th,
+.reveal table.padding td {
+    padding: 5px 15px;
+}
+
+/* Custom css */
+/*
+.reveal table tr:last-child td {
+    border-bottom: none;
+}
+*/
+
+.reveal .speaker-notes {
+    white-space: pre-wrap;
+}
+
+.reveal.overview .slides .fragment {
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.theme-color-black-blue {
+    --theme-background-color: #111;
+    --r-overlay-element-bg-color: 240, 240, 240;
+    --r-overlay-element-fg-color: 0, 0, 0;
+    background: #111;
+}
+
+.theme-color-black-blue body {
+    background: transparent;
+}
+
+.theme-color-black-blue .theme-body-color-block {
+    background: #fff;
+}
+
+.theme-color-black-blue .theme-link-color-block {
+    background: #2F90F8;
+}
+
+.theme-color-black-blue .themed,
+.theme-color-black-blue .reveal {
+    color: #fff;
+}
+
+.theme-color-black-blue .themed a,
+.theme-color-black-blue .reveal a {
+    color: #2F90F8;
+}
+
+.theme-color-black-blue .themed a:hover,
+.theme-color-black-blue .reveal a:hover {
+    color: #79b7fa;
+}
+
+.theme-color-black-blue .reveal .controls {
+    color: #2F90F8;
+}
+
+.theme-color-black-blue .reveal.has-dark-background .controls {
+    color: #fff;
+}
+
+.theme-color-black-blue .reveal.has-light-background .controls {
+    color: #000;
+}
+
+.theme-color-black-blue .reveal .progress {
+    background: rgba(0, 0, 0, 0.2);
+    color: #2F90F8;
+}
+
+.theme-color-black-blue .reveal .slide-number a {
+    color: currentColor;
+}
+
+.theme-color-black-blue .reveal .slide-number {
+    color: #ddd;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+/** Custom css */
+
+.reveal .slides {
+    text-align: unset;
+}
+
+.reveal code[data-code-wrap="true"] {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    word-break: break-word;
+}
+
+.reveal .slides section {
+    padding: 48px;
+}
+
+.reveal .slides section.title {
+    text-align: center;
+}
+
+.reveal .slides section.title h1 {
+    position: absolute;
+    bottom: 50%;
+    width: calc(100% - 96px);
+    margin: 0;
+}
+
+.reveal .slides section.title div.rest {
+    position: absolute;
+    top: 50%;
+    width: calc(100% - 96px);
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.reveal .slides .flex {
+    display: flex;
+}
+
+.reveal .slides .items-center {
+    align-items: center;
+}
+
+.reveal .slides .justify-center {
+    justify-content: center;
+}
+
+.reveal .slides .w-full {
+    width: 100%;
+}
+
+.reveal .slides .w-fit {
+    width: fit-content;
+}
+
+.reveal .slides .w-1\/2 {
+    width: 50%;
+}
+
+.reveal .slides .h-full {
+    height: 100%;
+}
+
+.reveal .slides .gap-4 {
+    gap: 1rem;
+}
+
+/*
+TODO
+
+If there are multiple nested uls, each adds some bottom margin. If there is, e.g., a code block after that, it will add up.
+
+*/

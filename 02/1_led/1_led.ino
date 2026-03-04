@@ -1,9 +1,9 @@
 #include <funshield.h>
 
 void setup() {
-    pinMode(led1_pin, OUTPUT); // Declare given pin as output
+    pinMode(LED1_PIN, OUTPUT); // Declare given pin as output
     
-    digitalWrite(led1_pin, ON); // Set voltage on the pin
+    digitalWrite(LED1_PIN, ON); // Set voltage on the pin
 }
 
 void loop() {

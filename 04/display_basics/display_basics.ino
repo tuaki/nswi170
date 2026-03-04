@@ -1,19 +1,19 @@
 #include "funshield.h"
 
-constexpr int displayDigits = 4;
+constexpr int DISPLAY_SIZE = 4;
 
 void displayDigit(byte digit, byte pos)
 {
-  digitalWrite(latch_pin, LOW);
-  shiftOut(data_pin, clock_pin, MSBFIRST, digits[digit % sizeof(digits)]);
-  shiftOut(data_pin, clock_pin, MSBFIRST, 1 << (displayDigits - 1 - pos));
-  digitalWrite(latch_pin, HIGH);
+  digitalWrite(SEG7_LATCH_PIN, LOW);
+  shiftOut(SEG7_DATA_PIN, SEG7_CLOCK_PIN, MSBFIRST, SEG7_DIGIT_GLYPHS[digit % sizeof(SEG7_DIGIT_GLYPHS)]);
+  shiftOut(SEG7_DATA_PIN, SEG7_CLOCK_PIN, MSBFIRST, 1 << (DISPLAY_SIZE - 1 - pos));
+  digitalWrite(SEG7_LATCH_PIN, HIGH);
 }
 
 void setup() {
-  pinMode(latch_pin, OUTPUT);
-  pinMode(clock_pin, OUTPUT);
-  pinMode(data_pin, OUTPUT);
+  pinMode(SEG7_LATCH_PIN, OUTPUT);
+  pinMode(SEG7_CLOCK_PIN, OUTPUT);
+  pinMode(SEG7_DATA_PIN, OUTPUT);
 }
 
 void loop() {

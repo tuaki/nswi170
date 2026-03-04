@@ -8,7 +8,7 @@
  */
 class MusicPlayer {
 public:
-  MusicPlayer(int pattern[], int patternSize, int pin = beep_pin): pattern(pattern), patternSize(patternSize), pin(pin) { }
+  MusicPlayer(int pattern[], int patternSize, int pin = BEEP_PIN): pattern(pattern), patternSize(patternSize), pin(pin) { }
 
   /**
    * Use in setup() to initialize the player
@@ -68,7 +68,7 @@ int NocturnePattern[] = {660, 60, 180, 60, 60, 180, 60, 180, 60, 180, 420, 60, 1
 struct MusicPlayer NoctrunePlayer(NocturnePattern, sizeof(NocturnePattern)/sizeof(NocturnePattern[0]));
 
 int BlinkLedPattern[] = {100, 100};
-struct MusicPlayer blinker(BlinkLedPattern, 2, led2_pin);
+struct MusicPlayer blinker(BlinkLedPattern, 2, LED2_PIN);
 
 void setup() {
   // Setup players
@@ -77,9 +77,9 @@ void setup() {
   blinker.setup();
 
   // Init buttons
-  pinMode(button1_pin, INPUT);
-  pinMode(button2_pin, INPUT);
-  pinMode(button3_pin, INPUT);
+  pinMode(BUTTON1_PIN, INPUT);
+  pinMode(BUTTON2_PIN, INPUT);
+  pinMode(BUTTON3_PIN, INPUT);
 }
 
 void loop() {
@@ -89,7 +89,7 @@ void loop() {
   blinker.handle();
 
   // Handle buttons 
-  sosSignal.setPlaying(!digitalRead(button1_pin));
-  NoctrunePlayer.setPlaying(!digitalRead(button2_pin));
-  blinker.setPlaying(!digitalRead(button3_pin));
+  sosSignal.setPlaying(!digitalRead(BUTTON1_PIN));
+  NoctrunePlayer.setPlaying(!digitalRead(BUTTON2_PIN));
+  blinker.setPlaying(!digitalRead(BUTTON3_PIN));
 }

@@ -1,28 +1,28 @@
 #include <funshield.h>
 
-constexpr int leds[] = { led1_pin, led2_pin, led3_pin, led4_pin };
-constexpr int ledsSize = sizeof(leds) / sizeof(leds[0]);
+constexpr int LEDS[] = { LED1_PIN, LED2_PIN, LED3_PIN, LED4_PIN };
+constexpr int LEDS_SIZE = sizeof(LEDS) / sizeof(LEDS[0]);
 
 void setup() {
-    for (int led : leds)
+    for (int led : LEDS)
         pinMode(led, OUTPUT);
 
-    pinMode(button1_pin, INPUT);
-    pinMode(button2_pin, INPUT);
+    pinMode(BUTTON1_PIN, INPUT);
+    pinMode(BUTTON2_PIN, INPUT);
 }
 
 int activeLedIndex = 0;
 bool wasButtonPressed = false;
 
 void loop() {
-    for (int led : leds)
+    for (int led : LEDS)
         digitalWrite(led, OFF);
 
-    digitalWrite(leds[activeLedIndex], digitalRead(button1_pin));
+    digitalWrite(LEDS[activeLedIndex], digitalRead(BUTTON1_PIN));
 
-    bool isButtonPressed = digitalRead(button2_pin) == ON;
+    bool isButtonPressed = digitalRead(BUTTON2_PIN) == ON;
     if (isButtonPressed && !wasButtonPressed)
-        activeLedIndex = (activeLedIndex + 1) % ledsSize;
+        activeLedIndex = (activeLedIndex + 1) % LEDS_SIZE;
 
     wasButtonPressed = isButtonPressed;
 }

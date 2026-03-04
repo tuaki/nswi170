@@ -9,7 +9,7 @@ constexpr int DP = 128;
 constexpr int NONE = A + B + C + D + E + F + G + DP;
 constexpr int ALL = 0;
 
-constexpr int letterA = NONE - A - B - C - E     - F - G;
-constexpr int letterA = ALL                  + D         + DP;
+constexpr int LETTER_A = NONE - A - B - C - E     - F - G;
+constexpr int LETTER_A = ALL                  + D         + DP;
 
 

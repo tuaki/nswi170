@@ -1,9 +1,9 @@
 #include <funshield.h>
 
 void setup() {
-    pinMode(beep_pin, OUTPUT);
+    pinMode(BEEP_PIN, OUTPUT);
     
-    digitalWrite(beep_pin, ON);
+    digitalWrite(BEEP_PIN, ON);
 }
 
 void loop() {
