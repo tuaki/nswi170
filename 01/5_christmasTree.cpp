@@ -2,7 +2,7 @@
 
 using namespace std;
 
-const char* ORNAMENT = "@";
+constexpr char* ORNAMENT = "@";
 
 void printChars(int amount, char character) {
     for (int i = 0; i < amount; i++)

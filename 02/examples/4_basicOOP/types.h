@@ -24,5 +24,5 @@ private:
     unsigned long timeToStop;
     Led& led;
     unsigned long elapsedTime = 0;
-    bool stopped = false;
+    bool isStopped = false;
 };

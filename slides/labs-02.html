@@ -18,31 +18,89 @@
 <section class="title">
     <h1>Arduino IDE,<br />setup/loop, LEDky</h1>
     <div class="rest">
-        <p>NSWI170, 2025, Labs 02</p>
+        <p>NSWI170, 2026, Labs 02</p>
         <p>Jáchym Bártík</p>
     </div>
 </section>
 
 <section>
-    <h2>Pravidlo #2 - konstanty</h2>
+    <h2>Feedback</h2>
     <ul>
-        <li>Pojmenovávají konstantní hodnoty
+        <li>Žádost o revizi</li>
+        <li class="fragment" data-fragment-index="0">Dekompozice (a další pravidla)
             <ul>
-                <li>Především číselné a textové literály, ale i pole a objekty</li>
-                <li>Jména jsou unikátní, na rozdíl od hodnot</li>
+                <li>Červené vs. bílé připomínky</li>
             </ul>
         </li>
-        <li>DRY - definice jen na jednom místě
+        <li class="fragment" data-fragment-index="1">Mattermost</li>
+        <li class="fragment" data-fragment-index="2">Funkce <code>abs</code>
+            <pre class="cpp"><code data-line-numbers data-trim>
+if (temperature &lt; 0) {
+    printChars(' ', indentation - abs(temperature));
+    ...
+}
+            </code></pre>
+        </li>
+    </ul>
+</section>
+
+<section>
+    <h2>Pravidlo #2 - konstanty</h2>
+    <ul>
+        <li>Najděte 4 rozdíly:
+            <div class="flex gap-4">
+                <pre class="cpp w-full"><code data-line-numbers data-trim>
+for (int i = 0; i &lt; 4; i++)
+    digitalWrite(13 - i, LOW);
+                </code></pre>
+    
+                <pre class="cpp w-full"><code data-line-numbers data-trim>
+for (int i = 0; i &lt; LEDS_SIZE; i++)
+    digitalWrite(LEDS[i], ON);
+                </code></pre>
+            </div>
+        </li>
+        <li class="fragment" data-fragment-index="0">Setup:
+            <pre class="cpp"><code data-line-numbers data-trim>
+// funshield.h
+constexpr int ON = LOW;
+constexpr int LED1_PIN = 13;
+
+// solution.ino
+#include &lt;funshield.h&gt;
+constexpr int[] LEDS = { LED1_PIN, LED2_PIN, LED3_PIN, LED4_PIN };
+constexpr int LEDS_SIZE = sizeof(LEDS) / sizeof(LEDS[0]);
+            </code></pre>
+        </li>
+        <li class="fragment" data-fragment-index="1">Výhody:
             <ul>
-                <li>Snadnější změny</li>
-                <li>Méně závislostí</li>
+                <li class="fragment" data-fragment-index="2"><em>Pojmenovávají</em> konstantní hodnoty - <em>self-documentation</em></li>
+                <li class="fragment" data-fragment-index="3">Definice na jednom místě - snadnější změny, DRY</li>
+                <li class="fragment" data-fragment-index="4">Jména jsou unikátní, hodnoty ne</li>
             </ul>
         </li>
     </ul>
+</section>
+
+<section>
+    <h2>Pravidlo #2 - konstanty</h2>
     <ul>
-        <li>Čemu se vyhnout:
+        <li>Upřesnění:
             <ul>
-                <li>Matematické konstanty - <code>0</code>, <code>1</code>, <code>true</code>, <code>false</code>, <code>""</code>, ...</li>
+                <li>Jmenná konvence (zpravidla <code>UPPER_CASE</code>)</li>
+                <li>Lze použít i pro složitější objekty, nejen literály</li>
+                <li>Odvozené konstanty</li>
+                <li>Preferujte <code>constexpr</code> před <code>const</code></li>
+            </ul>
+            <pre class="cpp"><code data-line-numbers data-trim data-ln-start-from="7">
+constexpr int[] LEDS = { LED1_PIN, LED2_PIN, LED3_PIN, LED4_PIN };
+constexpr int LEDS_SIZE = sizeof(LEDS) / sizeof(LEDS[0]);
+            </code></pre>
+        </li>
+        <li class="fragment" data-fragment-index="2">Čemu se vyhnout:
+            <ul>
+                <li>Nemají žádný speciální význam - <code>0</code>, <code>1</code>, <code>true</code>, <code>false</code>, <code>""</code>, ...</li>
+                <li><em>Lokální</em> matematické hodnoty, které se <em>nemění</em></li>
             </ul>
         </li>
     </ul>
@@ -63,8 +121,6 @@
             </ul>
         </li>
         <li>Existuje mnoho neoficiálních klonů</li>
-    </ul>
-    <ul>
         <li>Software - <a href="https://www.arduino.cc/en/software" target="_blank">Arduino IDE</a></li>
     </ul>
 </section>
@@ -97,7 +153,7 @@
         <li>4 číselný sedmisegmentový display</li>
         <li>1 bzučák (bohužel nebudeme používat na cvičeních)
             <ul>
-                <li>Ukázka #1</li>
+                <li>Viz ukázka #1 (později)</li>
             </ul>
         </li>
         <li>1 potenciometr (také nevyužijme)</li>
@@ -120,11 +176,15 @@
                 <li><em>Upload</em> - nahrání kódu na desku</li>
             </ul>
         </li>
-        <li>Po nahrání se deska resetuje a začne rovnou vykonávat nový program</li>
-        <li>Knihovny - <em>Sketch</em> &gt; <em>Include Library</em>
+        <li>Po nahrání se deska resetuje a začne rovnou vykonávat nový program
+            <ul>
+                <li>Ukázka #1</li>
+            </ul>
+        </li>
+        <li class="fragment">Knihovny - <em>Sketch</em> &gt; <em>Include Library</em>
             <ul>
                 <li><em>Add .ZIP library...</em> (jednou)</li>
-                <li><em>Funshield</em> (u každého projektu)</li>
+                <li><em>funshield</em> (u každého projektu)</li>
             </ul>
         </li>
     </ul>
@@ -180,12 +240,12 @@ void loop() {
         </li>
     </ul>
     <pre class="cpp"><code data-line-numbers data-trim>
-constexpr int PERIOD = 100;   // In milliseconds
+constexpr int PERIOD = 100; // In milliseconds
 
 void loop() {
     // Do something
     
-    delay(PERIOD);        // Wait
+    delay(PERIOD);          // Wait
     
     // Do something else ...
 }
@@ -252,7 +312,7 @@ void loop() {
                             odhalí</li>
                     </ul>
                 </li>
-                <li>Pokud si přesto myslíte, že chyba není na vaší straně, kontaktujte nás co nejdřív</li>
+                <li>Pokud si přesto myslíte, že chyba není na vaší straně, kontaktujte nás co nejdříve</li>
             </ul>
         </li>
     </ul>
@@ -285,7 +345,7 @@ void loop() {
 </section>
 
 <section>
-    <h2>Ukázka #3</h2>
+    <h2>Cvičení #5 (bonus)</h2>
     <ul>
         <li>PWM (<em>Pulse With Modulation</em>)
             <ul>
@@ -293,17 +353,11 @@ void loop() {
                 <li>Rychlým střídáním těchto stavů můžeme docílit libovolné průměrné intenzity</li>
             </ul>
         </li>
-        <li>Předpokládejme spojitou funkci $I = I(t)$</li>
-        <li>Obecně náhodná časová řada</li>
-        <li>Dva přístupy:
+        <li><em>Bonus</em>: Zařiďte, aby se průměrná intenzita limitně blížila dané hodnotě, i když délky loopů nebudou náhodné
             <ul>
-                <li>Přesný - numericky integrujeme $I$</li>
-                <li>Náhodný - porovnáváme $I$ s náhodnou hodnotou
-                    <ul>
-                        <li>Stačí nám znát $I$ jen v diskrétních časech</li>
-                        <li>V dlouhodobém průměru je přesný</li>
-                    </ul>
-                </li>
+                <li>Např. chceme poloviční intenzitu, ale loopy trvají 1 ms, 9 ms, 1 ms, 9 ms, ...</li>
+                <li>Přesný přístup - numericky integrujeme skutečnou intenzitu</li>
+                <li>Náhodný přístup - porovnáváme cílovou intenzitu s RNG</li>
             </ul>
         </li>
     </ul>
@@ -315,7 +369,6 @@ void loop() {
 <script src="assets/reveal.js"></script>
 <script src="assets/notes/notes.js"></script>
 <script src="assets/highlight/highlight.js"></script>
-<script src="plugin/math/math.js"></script>
 <script>
 // https://revealjs.com/initialization/
 // https://revealjs.com/config/
@@ -331,7 +384,7 @@ Reveal.initialize({
     transition: 'slide',
     backgroundTransition: 'slide',
 
-    plugins: [ RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+    plugins: [ RevealHighlight, RevealNotes ],
 });
 </script>
 </body>

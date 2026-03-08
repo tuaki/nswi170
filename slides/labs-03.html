@@ -18,7 +18,7 @@
 <section class="title">
     <h1>LEDky &amp; Tlačítka</h1>
     <div class="rest">
-        <p>NSWI170, 2025, Labs 03</p>
+        <p>NSWI170, 2026, Labs 03</p>
         <p>Jáchym Bártík</p>
     </div>
 </section>
@@ -103,8 +103,6 @@ void loop() {
             </ul>
         </li>
         <li class="fragment" data-fragment-index="1">Nástroje - funkce, konstanty, smyčky, objekty, ...</li>
-    </ul>
-    <ul>
         <li class="fragment" data-fragment-index="2">Čemu se vyhnout:
             <ul>
                 <li>Sjednocování příliš různorodého kódu</li>
@@ -206,7 +204,7 @@ void loop() {
     <h2>Cvičení #3</h2>
     <ul>
         <li>Zařiďte, aby LEDka svítila právě tehdy, když je stisknuté tlačítko</li>
-        <li><em>Bonus:</em> Druhé tlačítko přepíná, která LEDka to bude</li>
+        <li><em>Bonus</em>: Druhé tlačítko přepíná, která LEDka to bude</li>
     </ul>
     <pre class="cpp"><code data-line-numbers data-trim>
 #include &lt;funshield.h&gt;
@@ -248,7 +246,7 @@ void loop() {
                 <li>Je nutné rozlišit, ve kterém průběhu <code>loop</code> bylo tlačítko stisknuto, tj. kdy <code>digitalRead</code> poprvé vrátila <code>false</code></li>
             </ul>
         </li>
-        <li><em>Bonus:</em> Debounce
+        <li><em>Bonus</em>: Debounce
             <ul>
                 <li>Tlačítko může <em>oscilovat</em>, neboli několikrát rychle za sebou změnit stav</li>
                 <li>Řešení - po každém stisknutí jej na chvíli zablokujte</li>

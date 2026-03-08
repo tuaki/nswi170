@@ -3,13 +3,13 @@ Timer::Timer(unsigned long timeToStop, Led& led): timeToStop(timeToStop), led(le
 }
 
 void Timer::update(unsigned long deltaTime) {
-    if (stopped)
+    if (isStopped)
         return;
 
     elapsedTime += deltaTime;
     if (elapsedTime < timeToStop)
         return;
 
-    stopped = true;
+    isStopped = true;
     led.off();
 }
