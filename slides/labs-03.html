@@ -24,70 +24,9 @@
 </section>
 
 <section>
-    <h2>Čas je relativní</h2>
+    <h2>Feedback</h2>
     <ul>
-        <li>Neměli bychom čekat, že událost nastane <em>v nějakém čase</em>
-        </li>
-    </ul>
-    <pre class="cpp"><code data-line-numbers data-trim>
-constexpr int PERIOD = 10;
-int lastTime = 0;
-
-void loop() {
-    int currentTime = millis();
-    if (currentTime - lastTime == PERIOD) { // Don't do this!
-        lastTime = currentTime;
-        doSomething();
-    }
-}
-    </code></pre>    
-    <ul>
-        <li class="fragment" data-fragment-index="0">Při velké zátěži může jeden běh <code>loop</code> trvat
-            více milisekund
-            <ul>
-                <li class="visible">Např. <code>millis()</code> vrací: 1, 3, 4, 6, 9, 11, ...</li>
-            </ul>
-        </li>
-    </ul>
-    <pre class="cpp fragment" data-fragment-index="1"><code data-line-numbers data-trim>
-if (currentTime - lastTime &gt;= PERIOD) {     // Don't do this either!
-    ...
-}
-    </code></pre>
-    <ul>
-        <li class="fragment" data-fragment-index="1">Nyní máme jistotu, že čas nebude přeskočen
-            <ul class="fragment" data-fragment-index="2">
-                <li>Průměrná perioda ale bude větší, než 10 ms</li>
-            </ul>
-        </li>
-    </ul>
-</section>
-
-<section>
-    <h2>Čas je relativní</h2>
-    <pre class="cpp"><code data-line-numbers data-trim>
-constexpr int PERIOD = 10;
-int lastTime = 0;
-
-void setup() {
-    lastTime = millis();                    // Don't forget this!
-}
-
-void loop() {
-    int currentTime = millis();
-    if (currentTime - lastTime &gt;= PERIOD) { // Do this instead
-        lastTime += PERIOD;
-        doSomething();
-    }
-}
-    </code></pre>
-    <ul>
-        <li>Ideální řešení
-            <ul>
-                <li>Čas nebude nikdy přeskočen</li>
-                <li>V dlouhodobém průměru se limitně blížíme k 10 ms</li>
-            </ul>
-        </li>
+        <li>Domácí úkoly - akceptované řešení, body</li>
     </ul>
 </section>
 
@@ -102,7 +41,7 @@ void loop() {
                 <li>Větší přehlednost</li>
             </ul>
         </li>
-        <li class="fragment" data-fragment-index="1">Nástroje - funkce, konstanty, smyčky, objekty, ...</li>
+        <li class="fragment" data-fragment-index="1">Nástroje - funkce, konstanty, cykly, objekty, ...</li>
         <li class="fragment" data-fragment-index="2">Čemu se vyhnout:
             <ul>
                 <li>Sjednocování příliš různorodého kódu</li>
@@ -129,7 +68,7 @@ void loop() {
                 <li class="fragment" data-fragment-index="1">Abstrakce, "obecná" řešení, ...</li>
             </ul>
         </li>
-        <li class="fragment" data-fragment-index="2">Úspěsná kombinace obou principů je skutečným uměním</li>
+        <li class="fragment" data-fragment-index="2">Úspěsná kombinace obou principů není easy</li>
     </ul>
 </section>
 
@@ -177,27 +116,25 @@ void loop() {
     <ul>
         <li>Nastavení pinu pro čtení
             <ul>
-                <li>Je to tak sice defaultně, ale stejně by se to mělo dělat kvůli čitelnosti</li>
+                <li>Je to tak sice defaultně, ale stejně bychom to měli dělat kvůli čitelnosti</li>
             </ul>
-        </li>
-    </ul>
-    <pre class="cpp"><code data-line-numbers data-trim>
+            <pre class="cpp"><code data-line-numbers data-trim>
 void setup() {
     pinMode(BUTTON1_PIN, INPUT);
 }
-    </code></pre>
-    <ul>
-        <li>Čtení je podobné jako zapisování
+            </code></pre>
+        </li>
+        <li class="fragment">Čtení je podobné jako zapisování
             <ul>
                 <li>Pokud funkce vrátí <code>ON</code>, tlačítko je zapnuté</li>
             </ul>
-        </li>
-    </ul>
-    <pre class="cpp"><code data-line-numbers data-trim>
+            <pre class="cpp"><code data-line-numbers data-trim>
 void loop() {
     bool isPressed = digitalRead(BUTTON1_PIN) == ON;
 }
-    </code></pre>
+            </code></pre>
+        </li>
+    </ul>
 </section>
 
 <section>
@@ -243,7 +180,7 @@ void loop() {
             <ul>
                 <li>Hodnota se časem (sama) nijak nemění</li>
                 <li>Při stisknutí tlačítka se zvýší o 1</li>
-                <li>Je nutné rozlišit, ve kterém průběhu <code>loop</code> bylo tlačítko stisknuto, tj. kdy <code>digitalRead</code> poprvé vrátila <code>false</code></li>
+                <li>Je nutné rozlišit, ve kterém průběhu <code>loop</code> bylo tlačítko stisknuto, tj. kdy <code>digitalRead</code> poprvé vrátila <code>ON</code></li>
             </ul>
         </li>
         <li><em>Bonus</em>: Debounce
@@ -286,56 +223,69 @@ void loop() {
         <li>Cílem je oddělit logiku tlačítek od logiky počítání času a dalších částí programu
             <ul>
                 <li>K tomu se hodí funkce</li>
-                <li>Ale vyžadují předávání příliš mnoha proměnných</li>
+                <li>Ty ale vyžadují předávání příliš mnoha proměnných</li>
                 <li>Navíc neoddělují data, pouze funkcionality</li>
             </ul>
         </li>
-        <li>Struktury:</li>
-    </ul>
-    <pre class="cpp"><code data-line-numbers data-trim>
+        <li class="fragment">Struktury:
+            <pre class="cpp"><code data-line-numbers data-trim>
 struct Button {
     int pin;
     bool isPressed;
 };
 
 void processButton(Button &amp;button) {
-    if (digitalRead(button.pin) == ON &amp;&amp; !button.isPressed)
-        ... // Handle the click event
+    if (digitalRead(button.pin) == ON &amp;&amp; !button.isPressed) {
+        button.isPressed = true;
+        ... // Handle click event
+    }
 }
 
 Button buttons[3];
 processButton(buttons[0]);
-    </code></pre>
+            </code></pre>
+        </li>
+    </ul>
 </section>
 
 <section>
+    <h2>Lepší řešení</h2>
     <ul>
-        <li>Navíc mohou obsahovat i funkce
+        <li>Struktury mohou obsahovat i funkce
             <ul>
                 <li>Kombinují data s funkcionalitami, které se jich týkají</li>
             </ul>
         </li>
-        <li>Pro každý prvek lze specifikovat viditelnost
+        <li class="fragment" data-fragment-index="0">Pro každý prvek lze specifikovat viditelnost
             <ul>
                 <li><code>public</code> vs. <code>private</code></li>
                 <li>Defaultně je vše <code>public</code></li>
             </ul>
         </li>
-        <li>Třídy - úplně stejné jako struktury, akorát že defaultně je vše <code>private</code></li>
-    </ul>
-    <pre class="cpp"><code data-line-numbers data-trim>
-class Button { // This class does exactly the same thing as the previous structure
+        <li class="fragment" data-fragment-index="1">Třídy - úplně stejné jako struktury, akorát že defaultně je vše <code>private</code>
+            <div class="flex gap-4">
+                <pre class="cpp w-full"><code data-line-numbers data-trim>
+class Button { // Basically structure
 public:
     int pin;
     bool isPressed;
 };
-    </code></pre>
-    <ul>
-        <li>Používejte výhradně třídy
+                </code></pre>
+
+                <pre class="cpp w-full"><code data-line-numbers data-trim>
+struct Button { // Basically class
+private:
+    int pin;
+    bool isPressed;
+};
+                </code></pre>
+            </div>
+        </li>
+        <li class="fragment" data-fragment-index="2">Používejte výhradně třídy
             <ul>
                 <li>Struktury jsou specifikem C/C++</li>
                 <li>Jinde se nepoužívají</li>
-                <li>Proto mohou být dost matoucí</li>
+                <li>Private je lepší default</li>
             </ul>
         </li>
     </ul>
