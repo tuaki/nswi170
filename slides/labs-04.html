@@ -24,16 +24,86 @@
 </section>
 
 <section>
+    <h2>Feedback</h2>
+    <ul>
+        <li>Early return
+            <div class="flex gap-4">
+                <pre class="cpp w-full"><code data-line-numbers data-trim>
+void foo() {
+    if (condition1) {
+        if (condition2) {
+            // a...
+        }
+        else {
+            if (condition3) {
+                // b...
+            }
+            else {
+                // c...
+            }
+        }
+    }
+    else {
+        // d...
+    }
+}
+                </code></pre>
+
+                <pre class="cpp w-full fragment" data-fragment-index="0"><code data-line-numbers data-trim>
+void foo() {
+    if (!condition1) {
+        // d...
+        return;
+    }
+
+    if (condition2) {
+        // a...
+    }
+    else if (condition3) {
+        // b...
+    }
+    else {
+        // c...
+    }
+}
+                </code></pre>
+
+                <pre class="cpp w-full fragment" data-fragment-index="1"><code data-line-numbers data-trim>
+void foo() {
+    if (!condition1) {
+        // d...
+        return;
+    }
+
+    if (condition2) {
+        // a...
+        return;
+    }
+
+    if (condition3) {
+        // b...
+        return;
+    }
+
+    // c...
+}
+                </code></pre>
+            </div>
+        </li>
+    </ul>
+</section>
+
+<section>
     <h2>Pravidlo #4 - Globální proměnné</h2>
     <ul>
         <li>Globální proměnné jsou obecně špatné
-            <ul>
+            <ul class="fragment" data-fragment-index="0">
                 <li>Netušené závislosti v kódu</li>
                 <li>Nulová přenositelnost a znovupoužitelnost</li>
                 <li>Obtížné testování či hledání chyb</li>
             </ul>
         </li>
-        <li class="fragment" data-fragment-index="0">Pravidla:
+        <li class="fragment" data-fragment-index="1">Pravidla:
             <ul>
                 <li>Nepoužívat GP místo lokálních
                     <ul>
@@ -43,7 +113,7 @@
                 <li>Nepoužívat GP pro předávání hodnot do / z funkcí</li>
             </ul>
         </li>
-        <li class="fragment" data-fragment-index="1">Výjimka - globální konstanty
+        <li class="fragment" data-fragment-index="2">Výjimka - globální konstanty
             <ul>
                 <li>Nicméně i ty mají své nevýhody ...</li>
             </ul>
@@ -54,17 +124,14 @@
 <section>
     <h2>Specifika Arduina</h2>
     <ul>
-        <li>Potřebujeme je k uchovávání stavu mezi voláními <code>loop</code>
-            <ul>
-                <li>Až na statické proměnné (ale ty jsou v podstatě stejné)</li>
-            </ul>
+        <li>GP potřebujeme k udržení stavu mezi voláními <code>loop</code>
         </li>
         <li class="fragment" data-fragment-index="0">Workflow:
             <ul>
                 <li>Přístup ke GP pouze ze <code>setup</code> a <code>loop</code>
                 </li>
                 <li>Do ostatních funkcí se předávají argumenty</li>
-                <li>Nové hodnoty se vrací návratovými hodnotami / výstupními argumenty</li>
+                <li>Nové hodnoty se vrací návratovými hodnotami</li>
             </ul>
         </li>
         <li class="fragment" data-fragment-index="1">Lepší řešení - objekty
@@ -132,13 +199,13 @@
     <div class="flex gap-4">
         <ul class="w-1/2">
             <li>8 částí - jeden byte</li>
-            <li>Stavy:
+            <li class="fragment" data-fragment-index="0">Stav segmentu:
                 <ul>
                     <li>0 - led svítí</li>
                     <li>1 - led nesvítí</li>
                 </ul>
             </li>
-            <li>Uspořádání - číslo 7:
+            <li class="fragment" data-fragment-index="1">Uspořádání - číslo 7:
                 <table style="text-align: center; table-layout: fixed; width: 401px;">
                     <tbody>
                         <tr>
@@ -164,7 +231,7 @@
                     </tbody>
                 </table>
             </li>
-            <li>Výsledná hodnota:<br />
+            <li class="fragment" data-fragment-index="2">Výsledná hodnota:<br />
                 255 - 4 - 2 - 1 = 248
             </li>
         </ul>
@@ -200,24 +267,26 @@
 <section>
     <h2>Použití displeje</h2>
     <ul>
-        <li>Podle předchozího algoritmu:</li>
-    </ul>
-    <pre class="cpp"><code data-line-numbers data-trim>
-shiftOut(DATA_PIN, CLOCK_PIN, MSBFIRST, 248);   // Display digit 7 (11111000) ...
-shiftOut(DATA_PIN, CLOCK_PIN, MSBFIRST, 5);     // ... on positions 1 and 3 (0101)
+        <li>Podle předchozího algoritmu:
+            <pre class="cpp"><code data-line-numbers data-trim>
+shiftOut(SEG7_DATA_PIN, SEG7_CLOCK_PIN, MSBFIRST, 248); // Display digit 7 (11111000) ...
+shiftOut(SEG7_DATA_PIN, SEG7_CLOCK_PIN, MSBFIRST, 5);   // ... on positions 1 and 3 (0101)
 
-digitalWrite(LATCH_PIN, LOW);                   // Trigger the latch
-digitalWrite(LATCH_PIN, HIGH);
-    </code></pre>
-    <ul>
-        <li>Konstanty pro piny jsou ve <code>funshield.h</code>
+digitalWrite(SEG7_LATCH_PIN, LOW);                      // Trigger the latch
+digitalWrite(SEG7_LATCH_PIN, HIGH);
+            </code></pre>
+        </li>
+        <li class="fragment" data-fragment-index="0">Konstanty pro piny jsou ve <code>funshield.h</code>
             <ul>
-                <li>Předtím je všechny musíme nastavit na <code>OUTPUT</code>
-                </li>
-                <li>Pro číslice a pozice už také existují konstanty (<code>SEG7_DIGIT_GLYPHS</code>)</li>
+                <li>Předtím je všechny musíme nastavit na <code>OUTPUT</code></li>
             </ul>
         </li>
-        <li>Konstanta <code>MSBFIRST</code> určuje pořadí bitů
+        <li class="fragment" data-fragment-index="1">Pro číslice a písmena už také existují konstanty - <strong>používejte je</strong>
+            <ul>
+                <li>Např. <code>SEG7_DIGIT_GLYPHS[7]</code> místo <code>248</code></li>
+            </ul>
+        </li>
+        <li class="fragment" data-fragment-index="2">Konstanta <code>MSBFIRST</code> určuje pořadí bitů
             <ul>
                 <li>Most Significant Bit First</li>
                 <li>Druhou možností je <code>LSBFIRST</code></li>
@@ -231,7 +300,7 @@ digitalWrite(LATCH_PIN, HIGH);
     <ul>
         <li>Vytvořte funkci, která zobrazí číslici na displeji
             <ul>
-                <li><code>displayDigit(int digit, int position)</code>
+                <li><code>void displayDigit(int digit, int position)</code>
                     <ul>
                         <li><code>digit</code> je od 0 do 9</li>
                         <li><code>position</code> je od 0 do 3</li>
