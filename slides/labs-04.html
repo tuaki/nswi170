@@ -29,7 +29,7 @@
         <li>Early return
             <div class="flex gap-4">
                 <pre class="cpp w-full"><code data-line-numbers data-trim>
-void foo() {
+int foo() {
     if (condition1) {
         if (condition2) {
             // a...
@@ -46,46 +46,52 @@ void foo() {
     else {
         // d...
     }
+
+    return x;
 }
                 </code></pre>
 
                 <pre class="cpp w-full fragment" data-fragment-index="0"><code data-line-numbers data-trim>
-void foo() {
+int foo() {
     if (!condition1) {
         // d...
-        return;
+        return x;
     }
 
     if (condition2) {
         // a...
+        return x;
     }
     else if (condition3) {
         // b...
+        return x;
     }
     else {
         // c...
+        return x;
     }
 }
                 </code></pre>
 
                 <pre class="cpp w-full fragment" data-fragment-index="1"><code data-line-numbers data-trim>
-void foo() {
+int foo() {
     if (!condition1) {
         // d...
-        return;
+        return x;
     }
 
     if (condition2) {
         // a...
-        return;
+        return x;
     }
 
     if (condition3) {
         // b...
-        return;
+        return x;
     }
 
     // c...
+    return x;
 }
                 </code></pre>
             </div>
