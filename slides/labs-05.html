@@ -31,22 +31,22 @@
                 <li>Ten je přístupný prostřednictvím minimálního rozhraní</li>
             </ul>
         </li>
-        <li>Konkrétní implementace je skryta (<code>private</code>)
+        <li class="fragment" data-fragment-index="0">Konkrétní implementace je skryta (<code>private</code>)
             <ul>
                 <li>Může se kdykoli změnit</li>
             </ul>
         </li>
-        <li class="fragment" data-fragment-index="0">Rozhraní na prvním místě
+        <li class="fragment" data-fragment-index="1">Rozhraní na prvním místě
             <ul>
-                <li class="fragment" data-fragment-index="1">Co třída reprezentuje?</li>
-                <li class="fragment" data-fragment-index="2">Co chceme, aby uměla?</li>
-                <li class="fragment" data-fragment-index="3">K čemu musí mít přístup i ostatní třídy?</li>
-                <li class="fragment" data-fragment-index="4">Co se pravděpodobně nebude měnit?</li>
+                <li class="fragment" data-fragment-index="2">Co třída reprezentuje?</li>
+                <li class="fragment" data-fragment-index="3">Co chceme, aby uměla?</li>
+                <li class="fragment" data-fragment-index="4">K čemu musí mít přístup i ostatní třídy?</li>
+                <li class="fragment" data-fragment-index="5">Co se pravděpodobně nebude měnit?</li>
             </ul>
         </li>
-        <li class="fragment" data-fragment-index="5">Implementace na druhém
+        <li class="fragment" data-fragment-index="6">Implementace na druhém
             <ul>
-                <li class="fragment" data-fragment-index="6">Jak nejlépe splnit dané rozhraní?</li>
+                <li class="fragment" data-fragment-index="7">Jak nejlépe splnit dané rozhraní?</li>
             </ul>
         </li>
     </ul>
@@ -54,88 +54,86 @@
 
 <section>
     <h2>Příklad - Button</h2>
-    <ul>
-        <li><code>Button</code> musí umět:
-            <ul>
-                <li class="fragment" data-fragment-index="0">Říct, jestli je právě teď zmáčknuto</li>
-                <li class="fragment" data-fragment-index="1">Být nastaveno (<code>setup</code>) a updatováno (<code>loop</code>)</li>
-                <li class="fragment" data-fragment-index="2"><em>Příklad rozšíření:</em> zamknutí / odemknutí</li>
-            </ul>
-        </li>
-        <li class="fragment" data-fragment-index="3">Potřebujeme, aby tlačítko říkalo, jaký má pin?
-            <ul>
-                <li class="fragment" data-fragment-index="4">Pozor na prázdné gettery a settery</li>
-            </ul>
-        </li>
-        <li class="fragment" data-fragment-index="5">Jak zařídit, aby zvyšovalo counter?
-            <ul>
-                <li class="fragment" data-fragment-index="6"><code>NumberButton</code> - obsahuje hodnotu a odkaz na counter</li>
-                <li class="fragment" data-fragment-index="7"><code>EventButton</code> - obsahuje obecnou funkci</li>
-            </ul>
-        </li>
-    </ul>
-</section>
 
-<section>
-    <h2>Zpětná vazba k DU</h2>
     <ul>
-        <li>Více než dvě úrovně zanoření jsou velmi nepřehledné
-            <ul>
-                <li>Řešení - early return, lepší dekompozice</li>
-                <li>Viz příklad</li>
-            </ul>
+        <li>
+            <div class="flex gap-4">
+                <div class="w-1/2">
+                    Tlačítko musí umět:
+                    <ul>
+                        <li class="fragment" data-fragment-index="0">Říct, jestli je právě teď zmáčknuto</li>
+                        <li class="fragment" data-fragment-index="1">Být nastaveno (<code>setup</code>) a updatováno (<code>loop</code>)</li>
+                    </ul>
+                </div>
+
+                <pre class="cpp w-1/2 fragment" data-fragment-index="2"><code data-line-numbers data-trim>
+class Button {
+public:
+    Button(int pin);
+    void setup();
+    void loop();
+    bool isPressed();
+};
+                </code></pre>
+            </div>
         </li>
-        <li>Přehledný kód je lepší než kompaktní, ale kompaktnost je stále důležitá</li>
-    </ul>
-    <div class="flex gap-4">
-        <pre class="cpp fragment w-1/2" data-fragment-index="0"><code data-line-numbers data-trim>
-// Don't do this!
-function foo() {
-    if (someCondition) {
-        return false;
+
+        <li class="fragment" data-fragment-index="3">
+            <div class="flex gap-4">
+                <div class="w-1/2">
+                    Potřebujeme mít pin veřejný?
+                    <ul>
+                        <li class="fragment" data-fragment-index="4">Pozor na prázdné gettery a settery</li>
+                    </ul>
+                </div>
+
+                <div class="w-1/2" style="position: relative;">
+                    <pre class="cpp fragment current-visible" data-fragment-index="4"><code data-line-numbers data-trim>
+class Button {
+    int pin;
+
+public:
+    int getPin() {
+        return pin;
     }
 
-    return true;
-}
+    void setPin(int value) {
+        pin = value;
+    }
+};
+                    </code></pre>
 
-// Do this instead
-function foo() {
-    return !someCondition;
-}
-        </code></pre>
-        <pre class="cpp fragment w-1/2" data-fragment-index="1"><code data-line-numbers data-trim>
-// Don't do this!
-if (counter &amp; (1 &lt;&lt; i)) {
-    digitalWrite(pins[i], ON);
-}
-else {
-    digitalWrite(pins[i], OFF);
-}
+                    <pre class="cpp w-full fragment" data-fragment-index="5" style="position: absolute; top: 0;"><code data-line-numbers data-trim>
+class Button {
+public:
+    const int pin;
 
-// Do this instead
-bool shouldTurnOn = counter &amp; (1 &lt;&lt; i);
-digitalWrite(pins[i], shouldTurnOn ? ON : OFF);
-        </code></pre>
-    </div>
+    Button(int pin) : pin(pin) {}
+};
+                    </code></pre>
+                </div>
+            </div>
+        </li>
+    </ul>
 </section>
 
 <section>
     <h2>Cvičení #1</h2>
     <ul>
-        <li>Rozsviťte všechny ledky najednou
+        <li>Rozsviťte celý displej
             <ul>
                 <li>Vyjděte z domácího úkolu #4</li>
                 <li>Odeberte třetí tlačítko</li>
                 <li>V každé <code>loop</code> zobrazte postupně všechny čtyři číslice</li>
             </ul>
         </li>
-        <li class="visible">Experiment:
+        <li>Experiment:
             <ol>
                 <li>Co se stane, když na konec <code>loop</code> přidáte <code>delay(2)</code>?</li>
                 <li>Co se stane, když tímto způsobem zobrazíte číslo jenom v <code>setup</code>?</li>
             </ol>
         </li>
-        <li class="fragment" data-fragment-index="0">Pozorování:
+        <li class="fragment">Pozorování:
             <ol>
                 <li>První ledka je výrazně jasnější.</li>
                 <li>Je vidět jen jedna ledka.</li>
@@ -147,9 +145,9 @@ digitalWrite(pins[i], shouldTurnOn ? ON : OFF);
 <section>
     <h2>Cvičení #2</h2>
     <ul>
-        <li>Rozsviťte ledky tak, aby všechny svítily stejně
+        <li>Rozsviťte číslice na displeji tak, aby všechny svítily stejně jasně
             <ul>
-                <li>V každé <code>loop</code> rozsviťte vždy jen jednu ledku</li>
+                <li>V každé <code>loop</code> rozsviťte vždy jen jednu číslici</li>
                 <li>Logiku, která to řeší, oddělte od zbytku kódu
                     <ul>
                         <li>Ideálně do třídy, která bude sama ovládat displej</li>
@@ -177,13 +175,13 @@ digitalWrite(pins[i], shouldTurnOn ? ON : OFF);
             <ul>
                 <li>Nezobrazujte na začátku nuly
                     <ul>
-                        <li>Ačkoli číslo nula stále zobrazte jako <code>0</code></li>
+                        <li>Číslo nula stále zobrazte jako <code>0</code></li>
                     </ul>
                 </li>
-                <li>Přidejte desetinnou čárku
+                <li>Přidejte desetinnou tečku
                     <ul>
-                        <li>Funkce, která mění pozici čárky</li>
-                        <li>Čárku nezobrazujte, pokud by byla úplně vpravo</li>
+                        <li>Funkce, která mění pozici tečky</li>
+                        <li>Tečku nezobrazujte, pokud by byla úplně vpravo</li>
                     </ul>
                 </li>
                 <li>Vše pořádně otestujte
