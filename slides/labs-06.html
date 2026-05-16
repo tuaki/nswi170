@@ -24,18 +24,23 @@
 </section>
 
 <section>
-    <h2>Zpětná vazba k DU</h2>
+    <h2>Feedback</h2>
     <ul>
-        <li>Hierarchie tříd
+        <li>Minimalizace závislostí
             <ul>
-                <li>Co na čem závisí?</li>
-                <li>Vždy je lepší vyhnout se cyklickým závislostem</li>
+                <li>Potřebuje displej vědět o času?</li>
+                <li>Potřebují stopky vědět o displeji či tlačítkách?</li>
             </ul>
         </li>
-        <li class="fragment" data-fragment-index="0">Zodpovědnost
+        <li class="fragment" data-fragment-index="0">Omezení scope
             <ul>
-                <li>Která třída zodpovídá za co?</li>
-                <li>Třída by měla dělat právě jednu věc</li>
+                <li>Konstanty, enumy, atd.</li>
+                <li>Rozšíření principu zapouzdření (Pravidlo #5)</li>
+            </ul>
+        </li>
+        <li class="fragment" data-fragment-index="1">Unforgivable curses
+            <ul>
+                <li>Zejména konstanty (Pravidlo #2) - velmi snadno se kontroluje</li>
             </ul>
         </li>
     </ul>
@@ -51,24 +56,25 @@
         </li>
         <li class="fragment" data-fragment-index="0">Vytvoření:
             <ul>
-                <li>Defaultně - ukazuje na náhodné místo</li>
-                <li><code>nullptr</code> - neukazuje nikam (používejte místo <code>NULL</code>)</li>
-                <li>Adresa nějaké konkrétní hodnoty (operátor <code>&amp;</code>)</li>
-                <li>Výpočet z jiného pointeru (pointerová aritmetika)</li>
-                <li>Alokace - operátor <code>new</code>, funkce <code>malloc</code>, ...</li>
+                <li>Defaultně - ukazuje na náhodné místo (nepoužívejte)</li>
+                <li class="fragment" data-fragment-index="1"><code>nullptr</code> - neukazuje nikam (používejte místo <code>NULL</code>)</li>
+                <li class="fragment" data-fragment-index="2">Adresa nějaké konkrétní hodnoty (operátor <code>&amp;</code>)</li>
+                <li class="fragment" data-fragment-index="3">Výpočet z jiného pointeru (pointerová aritmetika)</li>
+                <li class="fragment" data-fragment-index="4">Alokace - operátor <code>new</code>, funkce <code>malloc</code>, ...</li>
             </ul>
         </li>
     </ul>
-    <pre class="cpp fragment" data-fragment-index="0"><code data-line-numbers data-trim>
+    <pre class="cpp fragment" data-fragment-index="0"><code data-line-numbers="1|2|4-7|9|10" data-fragment-index="1" data-trim>
 int* p1;            // Pointer to a random place in memory.
+int* p2 = nullptr;  // Pointer to nowhere.
 
 int x = 42;
-int* p2 = &amp;x;       // Pointer to the place where the value 42 is stored.
-int y = *p2 + 35;   // Pointer dereference - access to the value it points to.
+int* p3 = &amp;x;       // Pointer to the place where the value 42 is stored.
+int y = *p3 + 35;   // Pointer dereference - access to the value it points to.
 cout &lt;&lt; y;          // 77
 
-int* p3 = p2 + 1;   // Pointer to the next integer after p2.
-int* p4 = malloc(7 * sizeof(int));  // Pointer to the first element in an array of seven integers.
+int* p4 = p3 + 1;   // Pointer to the next integer after p3.
+int* p5 = malloc(7 * sizeof(int));  // Pointer to the first element in an array of seven integers.
     </code></pre>
 </section>
 
@@ -78,10 +84,11 @@ int* p4 = malloc(7 * sizeof(int));  // Pointer to the first element in an array 
         <li>Pointer je vlastně jen adresa místa v paměti, neboli číslo
             <ul>
                 <li>Z jedné adresy se můžeme snadno posunout na další</li>
-                <li><em>Pozor:</em> pointery nealokují paměť!</li>
+                <li><em>Pozor</em>: pointery nealokují paměť!</li>
             </ul>
         </li>
     </ul>
+
     <pre class="cpp"><code data-line-numbers data-trim>
 int x = 42;
 int* p = &amp;x;
@@ -90,16 +97,16 @@ int* p = &amp;x;
     <table class="fragment" data-fragment-index="0" style="text-align: center; table-layout: fixed; width: 801px;">
         <tbody>
             <tr>
-                <td>*(p - 1)</td>
-                <td>*p</td>
-                <td>*(p + 1)</td>
-                <td>*(p + 2)</td>
-                <td>*(p + 3)</td>
+                <td><code>*(p - 1)</code></td>
+                <td><code>*p</code></td>
+                <td><code>*(p + 1)</code></td>
+                <td><code>*(p + 2)</code></td>
+                <td><code>*(p + 3)</code></td>
             </tr>
             <tr>
                 <td>?</td>
-                <td>42</td>
-                <td>13</td>
+                <td><code>42</code></td>
+                <td><code>13</code></td>
                 <td>?</td>
                 <td>?</td>
             </tr>
@@ -140,14 +147,14 @@ int* p = &amp;x;
         <li class="fragment" data-fragment-index="2">Indexování pole mimo rozsah se nikde neověřuje
             <ul>
                 <li>Opět hrozí přístup na náhodnou adresu</li>
+                <li>Buffer overflow</li>
             </ul>
         </li>
         <li class="fragment" data-fragment-index="3">Memory leaky
             <ul>
-                <li>Při ruční alokaci paměti je nutné ji zase dealokovat</li>
+                <li>Při ruční alokaci paměti je nutné ji zase dealokovat (pomocí <code>delete</code>)</li>
             </ul>
         </li>
-        <li class="fragment" data-fragment-index="4"><strong>Pointer není reference</strong></li>
     </ul>
 </section>
 
@@ -168,30 +175,30 @@ const char* string = "Hello world";
     <table class="fragment" data-fragment-index="0" style="text-align: center; table-layout: fixed; width: 601px;">
         <tbody>
             <tr>
-                <td>H</td>
-                <td>e</td>
-                <td>l</td>
-                <td>l</td>
-                <td>o</td>
+                <td><code>H</code></td>
+                <td><code>e</code></td>
+                <td><code>l</code></td>
+                <td><code>l</code></td>
+                <td><code>o</code></td>
                 <td></td>
-                <td>W</td>
-                <td>o</td>
-                <td>r</td>
-                <td>l</td>
-                <td>d</td>
-                <td>\0</td>
+                <td><code>W</code></td>
+                <td><code>o</code></td>
+                <td><code>r</code></td>
+                <td><code>l</code></td>
+                <td><code>d</code></td>
+                <td><code>\0</code></td>
             </tr>
         </tbody>
     </table>
     <pre class="cpp fragment" data-fragment-index="1"><code data-line-numbers data-trim>
 int foo(const char* s) {
     int i = 0;
-    while (s[i])
+    while (s[i]) // null character is treated as false
         i++;
     return i;
 }
 
-foo(string);    // What is the output of this function?
+foo(string);     // What is the output of this function?
     </code></pre>
 </section>
 
@@ -204,7 +211,7 @@ foo(string);    // What is the output of this function?
                 <li>Z ní vypište první čtyři znaky
                     <ul>
                         <li>Použijte multiplexing (jako minule)</li>
-                        <li>Mapa znaků je v recodexu u domácího úkolu #6</li>
+                        <li>Mapa znaků je v knihovně <code>funshield.h</code></li>
                         <li>Znaky mimo zprávu považujte za prázdné</li>
                     </ul>
                 </li>
@@ -233,17 +240,13 @@ foo(string);    // What is the output of this function?
                         <tbody>
                             <tr>
                                 <td><code>___H</code></td>
-                                <td><code>Hell</code></td>
-                                <td><code>lo__</code></td>
-                            </tr>
-                            <tr>
                                 <td><code>__He</code></td>
-                                <td><code>ello</code></td>
-                                <td><code>o___</code></td>
-                            </tr>
-                            <tr>
                                 <td><code>_Hel</code></td>
+                                <td><code>Hell</code></td>
+                                <td><code>ello</code></td>
                                 <td><code>llo_</code></td>
+                                <td><code>lo__</code></td>
+                                <td><code>o___</code></td>
                                 <td><code>____</code></td>
                             </tr>
                         </tbody>
